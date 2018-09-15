@@ -2,13 +2,16 @@ package realizer
 
 // WordElement represents a word and its features.
 type WordElement struct {
+	*featureMap
 	baseForm string
 }
 
 // NewWordElement constructs a new WordElement.
 func NewWordElement(baseForm string) *WordElement {
+	word := &WordElement{baseForm: baseForm}
 	// TODO - accept a lexical category
-	return &WordElement{baseForm: baseForm}
+	word.featureMap = newFeatureMap()
+	return word
 }
 
 // GetRealization returns the realization for this element.

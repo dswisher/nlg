@@ -1,11 +1,12 @@
 
 # Basic go commands
-GOCMD  := go
-GOTEST := $(GOCMD) test
+GOCMD   := go
+GOBUILD := $(GOCMD) build
+GOTEST  := $(GOCMD) test
 
 # Other tools
-BINDIR := $(GOPATH)/bin
-GOLINT := $(BINDIR)/golint
+BINDIR  := $(GOPATH)/bin
+GOLINT  := $(BINDIR)/golint
 
 $(GOLINT):
 	go get github.com/golang/lint/golint
@@ -14,6 +15,10 @@ $(GOLINT):
 # Specifics about this project
 PKGS := $(shell go list ./... | grep -v /vendor)
 
+# Building
+.PHONY: build
+build:
+	$(GOBUILD) $(PKGS)
 
 # Testing
 .PHONY: test

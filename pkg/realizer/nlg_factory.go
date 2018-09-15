@@ -9,6 +9,7 @@ type NlgFactory struct {
 func (f *NlgFactory) Realizer() *Realizer {
 	if f.realizer == nil {
 		f.realizer = new(Realizer)
+		f.realizer.initialize()
 	}
 	return f.realizer
 }

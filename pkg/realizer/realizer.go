@@ -1,19 +1,31 @@
 package realizer
 
-import "fmt"
-
 // Realizer contains the state used by the realizer.
 type Realizer struct {
+	modules []realizerModule
+}
+
+func (r *Realizer) initialize() {
+	r.modules = append(r.modules, new(syntaxModule))
+	r.modules = append(r.modules, new(morphologyModule))
+	r.modules = append(r.modules, new(orthographyModule))
+	// TODO - add formatter module
 }
 
 // Realize turns the element tree into a string element.
 func (r *Realizer) Realize(element NlgElement) NlgElement {
-	// TODO - this is a temporary hack - implement the real version!
+	realized := element
 
-	word, ok := element.(*WordElement)
-	if ok {
-		return NewStringElement(word.baseForm)
+	for _, module := range r.modules {
+		realized = module.realize(realized)
 	}
 
-	panic(fmt.Sprintf("Unable to realize type '%T'.", element))
+	return realized
+
+	// word, ok := element.(*WordElement)
+	// if ok {
+	// 	return NewStringElement(word.baseForm)
+	// }
+
+	// panic(fmt.Sprintf("Unable to realize type '%T'.", element))
 }
