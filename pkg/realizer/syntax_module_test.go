@@ -2,7 +2,7 @@ package realizer
 
 import "testing"
 
-func TestWord(t *testing.T) {
+func TestSyntaxModule(t *testing.T) {
 	module := new(syntaxModule)
 
 	if module.realize(nil) != nil {
@@ -12,7 +12,7 @@ func TestWord(t *testing.T) {
 	featureName := "color"
 	featureValue := "red"
 
-	word := NewWordElement("silly")
+	word := NewWordElement("silly", LexicalCategoryAdjective)
 	word.setFeature(featureName, featureValue)
 	result := module.realize(word)
 	infl, ok := result.(*InflectedWordElement)

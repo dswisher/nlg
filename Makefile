@@ -23,7 +23,7 @@ build:
 # Testing
 .PHONY: test
 test: lint
-	$(GOTEST) -v $(PKGS)
+	$(GOTEST) -v -cover $(PKGS)
 
 # Linting
 .PHONY: lint

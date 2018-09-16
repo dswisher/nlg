@@ -6,8 +6,8 @@ func TestSimple(t *testing.T) {
 	muggle := "muggle"
 	factory := new(NlgFactory)
 	realizer := factory.Realizer()
-	// word := factory.CreateWord(muggle)
-	word := NewWordElement(muggle)
+	word := factory.CreateWordFromString(muggle, LexicalCategoryAny)
+	// word := NewWordElement(muggle)
 
 	result := realizer.Realize(word)
 
