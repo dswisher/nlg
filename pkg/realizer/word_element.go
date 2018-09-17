@@ -14,6 +14,11 @@ func NewWordElement(baseForm string, category LexicalCategory) *WordElement {
 	return word
 }
 
+// Category retrieves the category of this word
+func (e *WordElement) Category() LexicalCategory {
+	return e.category
+}
+
 // GetRealization returns the realization for this element.
 func (e *WordElement) GetRealization() string {
 	return ""

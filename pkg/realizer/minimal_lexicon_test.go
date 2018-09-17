@@ -1,13 +1,46 @@
-package realizer
+package realizer_test
 
-import "testing"
+import (
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 
-func TestMinimalLexicon(t *testing.T) {
-	lexicon := NewLexicon()
-	loadMinimalWords(lexicon)
+	. "github.com/dswisher/nlg/pkg/realizer"
+)
 
-	words := lexicon.GetWords("rock", LexicalCategoryNoun)
-	if len(words) != 1 {
-		t.Errorf("Lookup of 'rock', expected 1 item, got %d.", len(words))
-	}
-}
+var _ = Describe("Minimal lexicon", func() {
+	var lexicon *Lexicon
+
+	BeforeEach(func() {
+		lexicon = NewLexicon()
+		LoadMinimalWords(lexicon)
+	})
+
+	Describe("GetWords", func() {
+		Context("Boy", func() {
+			It("Is a noun", func() {
+				words := lexicon.GetWords("boy", LexicalCategoryNoun)
+				Expect(words).To(HaveLen(1))
+				Expect(words[0].Category()).To(Equal(LexicalCategoryNoun))
+				// TODO - check features
+			})
+		})
+
+		Context("Rock", func() {
+			// TODO - lookup "ANY" and make sure we got two items
+
+			It("Is a noun", func() {
+				words := lexicon.GetWords("rock", LexicalCategoryNoun)
+				Expect(words).To(HaveLen(1))
+				Expect(words[0].Category()).To(Equal(LexicalCategoryNoun))
+				// TODO - check features
+			})
+
+			It("Is a verb", func() {
+				words := lexicon.GetWords("rock", LexicalCategoryVerb)
+				Expect(words).To(HaveLen(1))
+				Expect(words[0].Category()).To(Equal(LexicalCategoryVerb))
+				// TODO - check features
+			})
+		})
+	})
+})

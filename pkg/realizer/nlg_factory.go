@@ -16,7 +16,7 @@ func (f *NlgFactory) Lexicon() *Lexicon {
 	if f.lexicon == nil {
 		f.lexicon = NewLexicon()
 		// TODO - build a better default lexicon
-		loadMinimalWords(f.lexicon)
+		LoadMinimalWords(f.lexicon)
 	}
 	return f.lexicon
 }

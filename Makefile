@@ -29,3 +29,7 @@ test: lint
 .PHONY: lint
 lint: $(GOLINT)
 	$(GOLINT) $(PKGS)
+
+.PHONY: clean
+clean:
+	$(GOCMD) clean -testcache -cache $(PKGS)

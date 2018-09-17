@@ -2,6 +2,7 @@ package realizer
 
 // Lexicon provides details on words.
 type Lexicon struct {
+	// TODO - there can be multiple entries with the same base: "rock" -> NOUN, "rock" -> VERB
 	baseMap map[string]*WordElement
 }
 
@@ -11,11 +12,28 @@ type LexicalCategory int
 const (
 	// LexicalCategoryAny indicates an unspecified category
 	LexicalCategoryAny LexicalCategory = iota
-	// LexicalCategoryAdjective is an adjective
-	LexicalCategoryAdjective = iota
 	// LexicalCategoryNoun is a noun
-	LexicalCategoryNoun = iota
-	// TODO - add remaining categories
+	LexicalCategoryNoun
+	// LexicalCategoryAdjective is an adjective
+	LexicalCategoryAdjective
+	// LexicalCategoryAdverb is an adverb
+	LexicalCategoryAdverb
+	// LexicalCategoryVerb is an verb
+	LexicalCategoryVerb
+	// LexicalCategoryDeterminer is an determiner
+	LexicalCategoryDeterminer
+	// LexicalCategoryPronoun is an pronoun
+	LexicalCategoryPronoun
+	// LexicalCategoryConjunction is an conjunction
+	LexicalCategoryConjunction
+	// LexicalCategoryPreposition is an preposition
+	LexicalCategoryPreposition
+	// LexicalCategoryComplementizer is an complementizer
+	LexicalCategoryComplementizer
+	// LexicalCategoryModal is an modal
+	LexicalCategoryModal
+	// LexicalCategoryAuxiliary is an auziliary
+	LexicalCategoryAuxiliary
 )
 
 // NewLexicon creates and initializes a new, empty lexicon
