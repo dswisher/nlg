@@ -1,27 +1,40 @@
 package realizer
 
-import "testing"
+import (
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+)
 
-func TestSyntaxModule(t *testing.T) {
-	module := new(syntaxModule)
+var _ = Describe("SyntaxModule", func() {
+	var module *syntaxModule
 
-	if module.realize(nil) != nil {
-		t.Errorf("Attempting to realize nil should yield nil.")
-	}
+	BeforeEach(func() {
+		module = new(syntaxModule)
+	})
 
-	featureName := "color"
-	featureValue := "red"
+	Describe("Realize nil", func() {
+		It("Should yield nil", func() {
+			Expect(module.realize(nil)).To(BeNil())
+		})
+	})
 
-	word := NewWordElement("silly", LexicalCategoryAdjective)
-	word.setFeature(featureName, featureValue)
-	result := module.realize(word)
-	infl, ok := result.(*InflectedWordElement)
-	if !ok {
-		t.Errorf("Attempting to realize word should inflected word, but got %T.", result)
-	}
+	Describe("Realize WordElement", func() {
+		var word *WordElement
 
-	actualValue := infl.getFeatureAsString(featureName)
-	if infl.getFeature(featureName) != featureValue {
-		t.Errorf("Inflected result should have feature '%s', with value '%s', but got value '%v'.", featureName, featureValue, actualValue)
-	}
-}
+		const (
+			featureName  = "color"
+			featureValue = "red"
+		)
+
+		BeforeEach(func() {
+			word = NewWordElement("silly", LexicalCategoryAdjective)
+			word.setFeature(featureName, featureValue)
+		})
+
+		It("Should be inflected with features", func() {
+			result := module.realize(word)
+			Expect(result).To(BeAssignableToTypeOf(new(InflectedWordElement)))
+			Expect(result.getFeature(featureName)).To(Equal(featureValue))
+		})
+	})
+})

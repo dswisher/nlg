@@ -1,17 +1,30 @@
-package realizer
+package realizer_test
 
-import "testing"
+import (
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 
-func TestSimple(t *testing.T) {
-	muggle := "muggle"
-	factory := new(NlgFactory)
-	realizer := factory.Realizer()
-	word := factory.CreateWordFromString(muggle, LexicalCategoryAny)
-	// word := NewWordElement(muggle)
+	. "github.com/dswisher/nlg/pkg/realizer"
+)
 
-	result := realizer.Realize(word)
+var _ = Describe("Realizer", func() {
 
-	if result.GetRealization() != muggle {
-		t.Errorf("Realization incorrect, expected '%s', got '%s'.", muggle, result.GetRealization())
-	}
-}
+	var (
+		factory  *NlgFactory
+		realizer *Realizer
+	)
+
+	BeforeEach(func() {
+		factory = new(NlgFactory)
+		realizer = factory.Realizer()
+	})
+
+	Describe("Single words", func() {
+		Context("Made up word, without features", func() {
+			It("Should be the same", func() {
+				word := NewWordElement("muggle", LexicalCategoryAny)
+				Expect(realizer.Realize(word).GetRealization()).To(Equal("muggle"))
+			})
+		})
+	})
+})

@@ -20,7 +20,7 @@ func (m *syntaxModule) realize(element NlgElement) NlgElement {
 
 	infl, ok := element.(*InflectedWordElement)
 	if ok {
-		// TODO - syntaxify a inflected word element
+		// TODO - syntaxify an inflected word element
 		realizedElement = infl
 	}
 
