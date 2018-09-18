@@ -3,8 +3,8 @@ package realizer
 // WordElement represents a word and its features.
 type WordElement struct {
 	*featureMap
-	baseForm string
 	category LexicalCategory
+	baseForm string
 }
 
 // NewWordElement constructs a new WordElement.

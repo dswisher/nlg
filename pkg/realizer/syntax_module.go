@@ -24,7 +24,9 @@ func (m *syntaxModule) realize(element NlgElement) NlgElement {
 		realizedElement = infl
 	}
 
-	// TODO - implement syntax module - handle other types
+	// TODO - handle PhraseElement
+	// TODO - handle ListElement
+	// TODO - handle CoordinatedPhraseElement
 
 	return realizedElement
 }

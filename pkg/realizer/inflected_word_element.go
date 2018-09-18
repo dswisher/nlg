@@ -3,6 +3,7 @@ package realizer
 // InflectedWordElement represents a word that needs to be inflected by the morphology module.
 type InflectedWordElement struct {
 	*featureMap
+	category LexicalCategory
 }
 
 func newInflectedWordElementFromWord(word *WordElement) *InflectedWordElement {
@@ -15,6 +16,11 @@ func newInflectedWordElementFromWord(word *WordElement) *InflectedWordElement {
 	// TODO - set the category
 
 	return inflected
+}
+
+// Category retrieves the category of this word
+func (e *InflectedWordElement) Category() LexicalCategory {
+	return e.category
 }
 
 // GetRealization returns the realization for this element.

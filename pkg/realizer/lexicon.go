@@ -3,7 +3,7 @@ package realizer
 // Lexicon provides details on words.
 type Lexicon struct {
 	// TODO - there can be multiple entries with the same base: "rock" -> NOUN, "rock" -> VERB
-	baseMap map[string]*WordElement
+	baseMap map[string][]*WordElement
 }
 
 // LexicalCategory is an enumeration of the different types of words.
@@ -36,11 +36,19 @@ const (
 	LexicalCategoryAuxiliary
 )
 
+// LexicalFeature is an enumeration of the features that can be applied to words.
+type LexicalFeature int
+
+const (
+	// LexicalFeatureDefaultInflection indicates the default inflectional variant for a word
+	LexicalFeatureDefaultInflection LexicalFeature = iota
+)
+
 // NewLexicon creates and initializes a new, empty lexicon
 func NewLexicon() *Lexicon {
 	lexicon := new(Lexicon)
 
-	lexicon.baseMap = make(map[string]*WordElement)
+	lexicon.baseMap = make(map[string][]*WordElement)
 
 	return lexicon
 }
@@ -60,19 +68,34 @@ func (l *Lexicon) LookupWord(word string, lexicalCategory LexicalCategory) *Word
 
 // GetWords returns a list of matching words
 func (l *Lexicon) GetWords(baseForm string, lexicalCategory LexicalCategory) []*WordElement {
-	// TODO - need to change baseMap to handle more than one match!
-	var list []*WordElement
-
 	match, ok := l.baseMap[baseForm]
-	if ok {
-		list = append(list, match.Copy())
+	if !ok {
+		return []*WordElement{}
 	}
 
-	return list
+	if lexicalCategory == LexicalCategoryAny {
+		return match
+	}
+
+	for _, word := range match {
+		if word.Category() == lexicalCategory {
+			return []*WordElement{word}
+		}
+	}
+
+	return []*WordElement{}
 }
 
 // Add puts a word into the lexicon
 func (l *Lexicon) Add(word *WordElement) {
-	l.baseMap[word.baseForm] = word.Copy()
+	clone := word.Copy()
+
+	if val, ok := l.baseMap[word.baseForm]; ok {
+		// TODO - if a word with this category already exists, replace it
+		l.baseMap[word.baseForm] = append(val, clone)
+	} else {
+		l.baseMap[word.baseForm] = []*WordElement{clone}
+	}
+
 	// TODO - add to index by variant and whatnot?
 }
