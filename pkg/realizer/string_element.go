@@ -2,21 +2,16 @@ package realizer
 
 // StringElement represents a canned bit of text.
 type StringElement struct {
-	*featureMap
-	category LexicalCategory
-	value    string
+	nlgElementData
+	value string
 }
 
 // NewStringElement constructs a new StringElement.
 func NewStringElement(value string) *StringElement {
-	elem := &StringElement{value: value}
-	elem.featureMap = newFeatureMap()
+	elem := &StringElement{value: value,
+		nlgElementData: newElementData(LexicalCategoryAny),
+	}
 	return elem
-}
-
-// Category retrieves the category of this word
-func (e *StringElement) Category() LexicalCategory {
-	return e.category
 }
 
 // GetRealization returns the realization for this element.
